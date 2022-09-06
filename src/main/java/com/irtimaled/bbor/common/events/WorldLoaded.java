@@ -16,7 +16,7 @@ public class WorldLoaded {
     public WorldLoaded(@NotNull WorldServer world) {
         WorldData info = world.n_();
         this.dimensionId = DimensionId.from(world.aa());
-        this.seed = world.D();
+        this.seed = world.E();
         this.spawnX = info.a();
         this.spawnZ = info.c();
     }
