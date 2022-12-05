@@ -4,6 +4,7 @@ import com.irtimaled.bbor.Logger;
 import com.irtimaled.bbor.common.BoundingBoxType;
 import com.irtimaled.bbor.common.EventBus;
 import com.irtimaled.bbor.common.StructureProcessor;
+import com.irtimaled.bbor.common.events.DataPackReloaded;
 import com.irtimaled.bbor.common.events.PlayerLoggedIn;
 import com.irtimaled.bbor.common.events.PlayerLoggedOut;
 import com.irtimaled.bbor.common.events.PlayerSubscribed;
@@ -15,6 +16,7 @@ import com.irtimaled.bbor.common.models.ServerPlayer;
 import net.minecraft.core.IRegistry;
 import net.minecraft.resources.MinecraftKey;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.level.chunk.Chunk;
@@ -43,13 +45,23 @@ public class CommonInterop {
         }
     }
 
+    @Deprecated
     public static void loadWorlds(@NotNull Collection<WorldServer> worlds) {
         for (WorldServer world : worlds) {
             loadWorld(world);
-            loadWorldStructures(world);
         }
     }
 
+    public static void loadServerStructures(MinecraftServer server) {
+        try {
+            final IRegistry<Structure> structureFeatureRegistry = server.aX().b(IRegistry.aN);
+            loadStructuresFromRegistry(structureFeatureRegistry);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+    @Deprecated(forRemoval = true)
     public static void loadWorldStructures(WorldServer world) {
         try {
             final IRegistry<Structure> structureFeatureRegistry = world.s().b(IRegistry.aN);
@@ -75,6 +87,10 @@ public class CommonInterop {
 
     public static void tick() {
         EventBus.publish(new ServerTick());
+    }
+
+    public static void dataPackReloaded() {
+        EventBus.publish(new DataPackReloaded());
     }
 
     public static void playerLoggedIn(EntityPlayer player) {

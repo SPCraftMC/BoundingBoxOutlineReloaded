@@ -24,13 +24,15 @@ repositories {
         url = 'https://papermc.io/repo/repository/maven-releases/'
     }
     maven {
-        url "https://libraries.minecraft.net"
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
 }
 
 dependencies {
     compileOnly fileTree(dir: 'lib', includes: ['*.jar'])
     compileOnly 'org.jetbrains:annotations:23.0.0'
+    compileOnly "org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT"
 }
 
 sourceSets {

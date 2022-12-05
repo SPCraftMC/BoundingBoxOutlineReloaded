@@ -4,12 +4,15 @@ import com.irtimaled.bbor.common.interop.CommonInterop;
 import com.irtimaled.bbor.common.messages.SubscribeToServer;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.server.level.WorldServer;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.craftbukkit.v1_19_R1.CraftServer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -35,7 +38,6 @@ public class Events implements Listener, PluginMessageListener {
         WorldServer world = VersionHelper.getNMSWorld(event.getWorld());
         if (world != null) {
             CommonInterop.loadWorld(world);
-            CommonInterop.loadWorldStructures(world);
 
             for (Chunk chunk : event.getWorld().getLoadedChunks()) {
                 net.minecraft.world.level.chunk.Chunk nmsChunk = VersionHelper.getNMSChunk(chunk);
@@ -66,6 +68,18 @@ public class Events implements Listener, PluginMessageListener {
         }
     }
 
+    // It may not run at only reload datapack
+    // but bukkit only support this
+    @EventHandler
+    public void onReload(@NotNull ServerLoadEvent event) {
+        if (event.getType() == ServerLoadEvent.LoadType.RELOAD) {
+            CommonInterop.dataPackReloaded();
+        } else {
+            CommonInterop.loadServerStructures(((CraftServer) Bukkit.getServer()).getServer()); // at serer load?
+        }
+    }
+
+
     void enable() {
         this.active = true;
     }
@@ -84,10 +98,14 @@ public class Events implements Listener, PluginMessageListener {
     public void onPluginMessageReceived(@NotNull String string, @NotNull Player player, byte[] bytes) {
         if (!active) return;
 
-        if (string.equals(SubscribeToServer.NAME)) {
-            EntityPlayer entityPlayer = VersionHelper.getNMSPlayer(player);
-            if (entityPlayer != null) {
-                CommonInterop.playerSubscribed(entityPlayer);
+        if (string.startsWith("bbor:")) {
+            switch (string) {
+                case SubscribeToServer.NAME -> {
+                    EntityPlayer entityPlayer = VersionHelper.getNMSPlayer(player);
+                    if (entityPlayer != null) {
+                        CommonInterop.playerSubscribed(entityPlayer);
+                    }
+                }
             }
         }
     }
