@@ -6,7 +6,7 @@ import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
-import org.bukkit.craftbukkit.v1_19_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_19_R2.CraftServer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -71,7 +71,7 @@ public class Events implements Listener, PluginMessageListener {
     // It may not run at only reload datapack
     // but bukkit only support this
     @EventHandler
-    public void onReload(@NotNull ServerLoadEvent event) {
+    public void onServerLoad(@NotNull ServerLoadEvent event) {
         if (event.getType() == ServerLoadEvent.LoadType.RELOAD) {
             CommonInterop.dataPackReloaded();
         } else {

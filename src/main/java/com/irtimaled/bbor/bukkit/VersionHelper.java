@@ -76,7 +76,7 @@ public class VersionHelper {
     public static String getPackVersion() {
         String[] versionPath = Bukkit.getBukkitVersion().split("-")[0].split("\\.");
         String version = "v" + versionPath[0] + "_" + versionPath[1] + "_R" + (versionPath.length > 2 ? versionPath[2] : "1");
-        return version.equals("v1_19_R2") ? "v1_19_R1" : version;
+        return version.equals("v1_19_R3") ? "v1_19_R2" : version;
     }
 
     @Nullable
