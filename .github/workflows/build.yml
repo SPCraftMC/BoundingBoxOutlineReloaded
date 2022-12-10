@@ -9,9 +9,9 @@ name: build
 
 on:
   push:
-    branches: [ "bukkit-all-version-dev" ]
+    branches: [ "bukkit-dev" ]
   pull_request:
-    branches: [ "bukkit-all-version-dev" ]
+    branches: [ "bukkit-dev" ]
 
 permissions:
   contents: read
