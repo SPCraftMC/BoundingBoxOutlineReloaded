@@ -12,7 +12,7 @@ public class ServerPlayer {
     private final Consumer<Packet<?>> packetConsumer;
 
     public ServerPlayer(EntityPlayer player) {
-        this.dimensionId = DimensionId.from(player.s.ac());
+        this.dimensionId = DimensionId.from(player.P());
         this.packetConsumer = player.b::a;
     }
 

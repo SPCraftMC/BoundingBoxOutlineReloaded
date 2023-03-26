@@ -19,7 +19,7 @@ public record DimensionId(MinecraftKey value) {
         return dimensionIdMap.computeIfAbsent(value, DimensionId::new);
     }
 
-    public static DimensionId OVERWORLD = DimensionId.from(World.e);
+    public static DimensionId OVERWORLD = DimensionId.from(World.h);
 
     @Override
     public String toString() {

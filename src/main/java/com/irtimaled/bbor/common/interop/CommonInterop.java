@@ -34,9 +34,9 @@ import java.util.Optional;
 public class CommonInterop {
 
     public static void chunkLoaded(@NotNull Chunk chunk) {
-        DimensionId dimensionId = DimensionId.from(chunk.q.ac());
+        DimensionId dimensionId = DimensionId.from(chunk.q.ab());
         Map<String, StructureStart> structures = new HashMap<>();
-        final IRegistry<Structure> structureFeatureRegistry = chunk.q.s().d(Registries.av);
+        final IRegistry<Structure> structureFeatureRegistry = chunk.q.u_().d(Registries.ax);
         for (var es : chunk.g().entrySet()) {
             final Optional<ResourceKey<Structure>> optional = structureFeatureRegistry.c(es.getKey());
             optional.ifPresent(key -> structures.put("structure:" + key.a().toString(), es.getValue()));
@@ -55,7 +55,7 @@ public class CommonInterop {
 
     public static void loadServerStructures(MinecraftServer server) {
         try {
-            final IRegistry<Structure> structureFeatureRegistry = server.aW().d(Registries.av);
+            final IRegistry<Structure> structureFeatureRegistry = server.aX().d(Registries.ax);
             loadStructuresFromRegistry(structureFeatureRegistry);
         } catch (Throwable t) {
             t.printStackTrace();
@@ -65,7 +65,7 @@ public class CommonInterop {
     @Deprecated(forRemoval = true)
     public static void loadWorldStructures(WorldServer world) {
         try {
-            final IRegistry<Structure> structureFeatureRegistry = world.s().d(Registries.av);
+            final IRegistry<Structure> structureFeatureRegistry = world.u_().d(Registries.ax);
             loadStructuresFromRegistry(structureFeatureRegistry);
         } catch (Throwable t) {
             t.printStackTrace();
@@ -99,10 +99,10 @@ public class CommonInterop {
     }
 
     public static void playerLoggedOut(@NotNull EntityPlayer player) {
-        EventBus.publish(new PlayerLoggedOut(player.ah()));
+        EventBus.publish(new PlayerLoggedOut(player.af()));
     }
 
     public static void playerSubscribed(@NotNull EntityPlayer player) {
-        EventBus.publish(new PlayerSubscribed(player.ah(), new ServerPlayer(player)));
+        EventBus.publish(new PlayerSubscribed(player.af(), new ServerPlayer(player)));
     }
 }
