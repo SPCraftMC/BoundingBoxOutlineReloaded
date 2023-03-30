@@ -44,28 +44,44 @@ public class NMSHelper {
             }
 
             int version = getVersion();
-            while (nmsClassCache == null || nmsMethodCache == null) {
+            while (nmsClassCache == null) {
                 String packVersion = getPackVersion(version);
                 Class<?> nmsClassCacheClass = null;
-                Class<?> nmsMethodCacheClass = null;
 
                 try {
                     nmsClassCacheClass = Class.forName("com.irtimaled.bbor.bukkit.NMS.version." + packVersion + "_NMSClass");
-                    nmsMethodCacheClass = Class.forName("com.irtimaled.bbor.bukkit.NMS.version." + packVersion + "_NMSMethod");
-                } catch (ReflectiveOperationException e) {
-                    if (--version < lowestSupportVersion) {
-                        Logger.error("NMSHelper init cache fail");
-                        return false;
+                } catch (ReflectiveOperationException ignored) {
+                }
+
+                if (nmsClassCache == null && nmsClassCacheClass != null) {
+                    try {
+                        nmsClassCache = (INMSClass) nmsClassCacheClass.getDeclaredConstructor().newInstance();
+                        Logger.info("NMSHelper init class version " + packVersion);
+                    } catch (ReflectiveOperationException ignored) {
                     }
                 }
 
-                if (nmsClassCacheClass != null && nmsMethodCacheClass != null) {
+                if (--version < lowestSupportVersion) {
+                    Logger.error("NMSHelper init cache fail");
+                    return false;
+                }
+            }
+
+            version = getVersion();
+            while (nmsMethodCache == null) {
+                String packVersion = getPackVersion(version);
+                Class<?> nmsMethodCacheClass = null;
+
+                try {
+                    nmsMethodCacheClass = Class.forName("com.irtimaled.bbor.bukkit.NMS.version." + packVersion + "_NMSMethod");
+                } catch (ReflectiveOperationException ignored) {
+                }
+
+                if (nmsMethodCache == null && nmsMethodCacheClass != null) {
                     try {
-                        nmsClassCache = (INMSClass) nmsClassCacheClass.getDeclaredConstructor().newInstance();
                         nmsMethodCache = (INMSMethod) nmsMethodCacheClass.getDeclaredConstructor().newInstance();
-                    } catch (ReflectiveOperationException e) {
-                        e.printStackTrace();
-                        return false;
+                        Logger.info("NMSHelper init method version " + packVersion);
+                    } catch (ReflectiveOperationException ignored) {
                     }
                 }
             }
@@ -108,7 +124,7 @@ public class NMSHelper {
         return Integer.parseInt(version[0]) * 10000 + Integer.parseInt(version[1]) * 100 + ((version.length > 2) ? Integer.parseInt(version[2]) : 0);
     }
 
-    private final static Map<String, String> packVersionMap = Map.of("v1_19_R2", "v1_19_R1", "v1_19_R3", "v1_19_R2");
+    private final static Map<String, String> packVersionMap = Map.of("v1_19_R2", "v1_19_R1", "v1_19_R3", "v1_19_R2", "v1_19_R4", "v1_19_R3");
 
     @NotNull
     public static String getPackVersion(int version) {
@@ -262,7 +278,7 @@ public class NMSHelper {
         nmsMethodCache.packetDataSerializerWriteChar(packetDataSerializer, value);
     }
 
-    public static void packetDataSerializerWriteMinecraftKey(Object packetDataSerializer, Object value){
+    public static void packetDataSerializerWriteMinecraftKey(Object packetDataSerializer, Object value) {
         nmsMethodCache.packetDataSerializerWriteMinecraftKey(packetDataSerializer, value);
     }
 
