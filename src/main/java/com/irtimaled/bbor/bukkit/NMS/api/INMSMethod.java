@@ -76,4 +76,12 @@ public interface INMSMethod {
     int structureBoundingBoxGetMaxZ(Object structureBoundingBox);
 
     Object serverGetStructureFeatureRegistry(Object server);
+
+    Object craftChunkGetChunk(Object chunk);
+
+    Object craftWorldGetWorld(Object world);
+
+    Object craftPlayerGetPlayer(Object player);
+
+    Object craftServerGetServer(Object server);
 }

@@ -20,4 +20,9 @@ public enum NMSClassName {
     World,
     WorldData,
     WorldServer,
+    CraftChunk,
+    CraftWorld,
+    CraftPlayer,
+    CraftServer,
+    ChunkStatus
 }

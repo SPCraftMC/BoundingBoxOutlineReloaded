@@ -5,6 +5,7 @@ import com.irtimaled.bbor.bukkit.NMS.api.NMSClassName;
 public class v1_18_R1_NMSClass extends BaseNMSClass {
 
     public v1_18_R1_NMSClass() throws ClassNotFoundException {
+        super("v1_18_R1");
         addClassCache(NMSClassName.Chunk, "net.minecraft.world.level.chunk.Chunk");
         addClassCache(NMSClassName.EntityPlayer, "net.minecraft.server.level.EntityPlayer");
         addClassCache(NMSClassName.IRegistry, "net.minecraft.core.IRegistry");

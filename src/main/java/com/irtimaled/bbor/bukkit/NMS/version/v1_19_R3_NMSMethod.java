@@ -1,5 +1,6 @@
 package com.irtimaled.bbor.bukkit.NMS.version;
 
+import com.irtimaled.bbor.Logger;
 import com.irtimaled.bbor.bukkit.NMS.NMSHelper;
 import com.irtimaled.bbor.bukkit.NMS.api.NMSClassName;
 import com.irtimaled.bbor.bukkit.NMS.api.NMSFieldDescribe;
@@ -49,5 +50,15 @@ public class v1_19_R3_NMSMethod extends BaseNMSMethod {
         addMethodCache("serverGetStructureFeatureRegistry1", NMSMethodDescribe.of(NMSClassName.MinecraftServer, "aX"));
         addMethodCache("serverGetStructureFeatureRegistry2", NMSMethodDescribe.of(NMSClassName.IRegistryCustom, "d", NMSHelper.getNMSClass(NMSClassName.ResourceKey)));
         addFieldCache("serverGetStructureFeatureRegistry3", NMSFieldDescribe.of(NMSClassName.Registries, "ax"));
+        addMethodCache("craftChunkGetChunk", NMSMethodDescribe.of(NMSClassName.CraftChunk, "getHandle", NMSHelper.getNMSClass(NMSClassName.ChunkStatus)));
+        addMethodCache("craftPlayerGetPlayer", NMSMethodDescribe.of(NMSClassName.CraftPlayer, "getHandle"));
+        addMethodCache("craftWorldGetWorld", NMSMethodDescribe.of(NMSClassName.CraftWorld, "getHandle"));
+        addMethodCache("craftServerGetServer", NMSMethodDescribe.of(NMSClassName.CraftServer, "getServer"));
+        addFieldCache("chunkStatusFull", NMSFieldDescribe.of(NMSClassName.ChunkStatus, "o"));
+    }
+
+    @Override
+    public Object craftChunkGetChunk(Object chunk) {
+        return invokeMethod("craftChunkGetChunk", chunk, getField("chunkStatusFull", null));
     }
 }

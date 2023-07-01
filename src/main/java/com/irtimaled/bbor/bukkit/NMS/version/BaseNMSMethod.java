@@ -238,4 +238,24 @@ public abstract class BaseNMSMethod implements INMSMethod {
     public Object serverGetStructureFeatureRegistry(Object world) {
         return invokeMethod("serverGetStructureFeatureRegistry2", invokeMethod("serverGetStructureFeatureRegistry1", world), getField("serverGetStructureFeatureRegistry3", null));
     }
+
+    @Override
+    public Object craftChunkGetChunk(Object chunk) {
+        return invokeMethod("craftChunkGetChunk", chunk);
+    }
+
+    @Override
+    public Object craftPlayerGetPlayer(Object player) {
+        return invokeMethod("craftPlayerGetPlayer", player);
+    }
+
+    @Override
+    public Object craftWorldGetWorld(Object world) {
+        return invokeMethod("craftWorldGetWorld", world);
+    }
+
+    @Override
+    public Object craftServerGetServer(Object server) {
+        return invokeMethod("craftServerGetServer", server);
+    }
 }

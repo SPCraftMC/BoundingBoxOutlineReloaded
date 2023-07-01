@@ -49,5 +49,9 @@ public class v1_19_R1_NMSMethod extends BaseNMSMethod {
         addMethodCache("serverGetStructureFeatureRegistry1", NMSMethodDescribe.of(NMSClassName.MinecraftServer, "aX"));
         addMethodCache("serverGetStructureFeatureRegistry2", NMSMethodDescribe.of(NMSClassName.IRegistryCustom, "b", NMSHelper.getNMSClass(NMSClassName.ResourceKey)));
         addFieldCache("serverGetStructureFeatureRegistry3", NMSFieldDescribe.of(NMSClassName.IRegistry, "aN"));
+        addMethodCache("craftChunkGetChunk", NMSMethodDescribe.of(NMSClassName.CraftChunk, "getHandle"));
+        addMethodCache("craftPlayerGetPlayer", NMSMethodDescribe.of(NMSClassName.CraftPlayer, "getHandle"));
+        addMethodCache("craftWorldGetWorld", NMSMethodDescribe.of(NMSClassName.CraftWorld, "getHandle"));
+        addMethodCache("craftServerGetServer", NMSMethodDescribe.of(NMSClassName.CraftServer, "getServer"));
     }
 }
