@@ -4,9 +4,14 @@ import com.irtimaled.bbor.common.interop.CommonInterop;
 import com.irtimaled.bbor.common.messages.SubscribeToServer;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.server.level.WorldServer;
+import net.minecraft.world.level.chunk.ChunkStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
-import org.bukkit.craftbukkit.v1_19_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_20_R1.CraftChunk;
+import org.bukkit.craftbukkit.v1_20_R1.CraftParticle;
+import org.bukkit.craftbukkit.v1_20_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,7 +30,7 @@ public class Events implements Listener, PluginMessageListener {
     public void onChunkLoad(ChunkLoadEvent event) {
         if (!active) return;
 
-        net.minecraft.world.level.chunk.Chunk chunk = VersionHelper.getNMSChunk(event.getChunk());
+        net.minecraft.world.level.chunk.Chunk chunk = (net.minecraft.world.level.chunk.Chunk) ((CraftChunk) event.getChunk()).getHandle(ChunkStatus.n);
         if (chunk != null) {
             CommonInterop.chunkLoaded(chunk);
         }
@@ -35,12 +40,12 @@ public class Events implements Listener, PluginMessageListener {
     public void onWorldLoad(WorldLoadEvent event) {
         if (!active) return;
 
-        WorldServer world = VersionHelper.getNMSWorld(event.getWorld());
+        WorldServer world = ((CraftWorld) event.getWorld()).getHandle();
         if (world != null) {
             CommonInterop.loadWorld(world);
 
             for (Chunk chunk : event.getWorld().getLoadedChunks()) {
-                net.minecraft.world.level.chunk.Chunk nmsChunk = VersionHelper.getNMSChunk(chunk);
+                net.minecraft.world.level.chunk.Chunk nmsChunk = (net.minecraft.world.level.chunk.Chunk) ((CraftChunk) chunk).getHandle(ChunkStatus.n);;
                 if (nmsChunk != null) {
                     CommonInterop.chunkLoaded(nmsChunk);
                 }
@@ -52,7 +57,7 @@ public class Events implements Listener, PluginMessageListener {
     public void onPlayerLoggedIn(PlayerJoinEvent event) {
         if (!active) return;
 
-        EntityPlayer player = VersionHelper.getNMSPlayer(event.getPlayer());
+        EntityPlayer player = ((CraftPlayer) event.getPlayer()).getHandle();
         if (player != null) {
             CommonInterop.playerLoggedIn(player);
         }
@@ -62,7 +67,7 @@ public class Events implements Listener, PluginMessageListener {
     public void onPlayerLoggedOut(PlayerQuitEvent event) {
         if (!active) return;
 
-        EntityPlayer player = VersionHelper.getNMSPlayer(event.getPlayer());
+        EntityPlayer player = ((CraftPlayer) event.getPlayer()).getHandle();
         if (player != null) {
             CommonInterop.playerLoggedOut(player);
         }
@@ -101,7 +106,7 @@ public class Events implements Listener, PluginMessageListener {
         if (string.startsWith("bbor:")) {
             switch (string) {
                 case SubscribeToServer.NAME -> {
-                    EntityPlayer entityPlayer = VersionHelper.getNMSPlayer(player);
+                    EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                     if (entityPlayer != null) {
                         CommonInterop.playerSubscribed(entityPlayer);
                     }

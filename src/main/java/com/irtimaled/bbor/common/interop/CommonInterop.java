@@ -34,9 +34,9 @@ import java.util.Optional;
 public class CommonInterop {
 
     public static void chunkLoaded(@NotNull Chunk chunk) {
-        DimensionId dimensionId = DimensionId.from(chunk.q.ab());
+        DimensionId dimensionId = DimensionId.from(chunk.F().ac());
         Map<String, StructureStart> structures = new HashMap<>();
-        final IRegistry<Structure> structureFeatureRegistry = chunk.q.u_().d(Registries.ax);
+        final IRegistry<Structure> structureFeatureRegistry = chunk.F().B_().d(Registries.az);
         for (var es : chunk.g().entrySet()) {
             final Optional<ResourceKey<Structure>> optional = structureFeatureRegistry.c(es.getKey());
             optional.ifPresent(key -> structures.put("structure:" + key.a().toString(), es.getValue()));
@@ -55,7 +55,7 @@ public class CommonInterop {
 
     public static void loadServerStructures(MinecraftServer server) {
         try {
-            final IRegistry<Structure> structureFeatureRegistry = server.aX().d(Registries.ax);
+            final IRegistry<Structure> structureFeatureRegistry = server.aV().d(Registries.az);
             loadStructuresFromRegistry(structureFeatureRegistry);
         } catch (Throwable t) {
             t.printStackTrace();
@@ -65,7 +65,7 @@ public class CommonInterop {
     @Deprecated(forRemoval = true)
     public static void loadWorldStructures(WorldServer world) {
         try {
-            final IRegistry<Structure> structureFeatureRegistry = world.u_().d(Registries.ax);
+            final IRegistry<Structure> structureFeatureRegistry = world.B_().d(Registries.az);
             loadStructuresFromRegistry(structureFeatureRegistry);
         } catch (Throwable t) {
             t.printStackTrace();

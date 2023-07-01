@@ -13,8 +13,8 @@ public class WorldLoaded {
     private final int spawnZ;
 
     public WorldLoaded(WorldServer world) {
-        WorldData info = world.J;
-        this.dimensionId = DimensionId.from(world.ab());
+        WorldData info = world.K;
+        this.dimensionId = DimensionId.from(world.ac());
         this.seed = world.A();
         this.spawnX = info.a();
         this.spawnZ = info.c();
