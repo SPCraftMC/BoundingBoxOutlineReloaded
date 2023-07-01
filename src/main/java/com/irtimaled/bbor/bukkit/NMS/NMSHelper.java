@@ -19,7 +19,7 @@ import java.util.*;
 public class NMSHelper {
 
     public static final int lowestSupportVersion = 11800;
-    public static final int lowestUnSupportVersion = 12000;
+    public static final int lowestUnSupportVersion = 12002;
 
     private static INMSClass nmsClassCache;
     private static INMSMethod nmsMethodCache;
@@ -96,7 +96,7 @@ public class NMSHelper {
         return Integer.parseInt(version[0]) * 10000 + Integer.parseInt(version[1]) * 100 + ((version.length > 2) ? Integer.parseInt(version[2]) : 0);
     }
 
-    private final static Map<String, String> packVersionMap = Map.of("v1_19_R2", "v1_19_R1", "v1_19_R3", "v1_19_R2", "v1_19_R4", "v1_19_R3");
+    private final static Map<String, String> packVersionMap = Map.of("v1_19_R2", "v1_19_R1", "v1_19_R3", "v1_19_R2", "v1_19_R4", "v1_19_R3", "v1_20_R2", "v1_20_R1");
 
     @NotNull
     public static String getPackVersion(int version) {
