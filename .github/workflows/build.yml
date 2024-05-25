@@ -8,10 +8,10 @@
 name: build
 
 on:
-  push:
-    branches: [ "bukkit-dev" ]
-  pull_request:
-    branches: [ "bukkit-dev" ]
+  - push #:
+    #branches: [ "bukkit-dev" ]
+  - pull_request #:
+    #branches: [ "bukkit-dev" ]
 
 permissions:
   contents: read
